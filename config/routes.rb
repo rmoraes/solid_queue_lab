@@ -7,4 +7,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  api_version module: "V1", path: { value: "v1" } do
+    resources :users, only: [ :index ] do
+    end
+  end
 end
