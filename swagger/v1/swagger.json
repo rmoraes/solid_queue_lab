@@ -5,11 +5,52 @@
     "version": "v1"
   },
   "paths": {
+    "/queues": {
+      "get": {
+        "summary": "list queues",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
     "/v1/users": {
       "get": {
         "summary": "list users",
         "tags": [
           "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/v1/users/batch_inactivate": {
+      "patch": {
+        "summary": "activate users in batch",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "promoter",
+                "supervisor",
+                "administrator"
+              ]
+            }
+          }
         ],
         "responses": {
           "200": {
