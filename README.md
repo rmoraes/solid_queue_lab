@@ -1,6 +1,8 @@
 # 🚀 Solid Queue Lab
 
-This is a Ruby on Rails project. Follow the instructions below to set up and run the local environment.
+This is a Ruby on Rails project designed to experiment with and demonstrate background job concepts using Solid Queue.
+
+Follow the instructions below to set up and run the local environment.
 
 ## Installation
 
