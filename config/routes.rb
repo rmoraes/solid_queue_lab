@@ -8,7 +8,20 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :queues, only: [ :index ]
+  resources :queues, only: [ :index, :destroy ] do
+    collection do
+      get :ready
+      get :running
+      get :failed
+      get :scheduled
+      get :recurring
+      get :status
+      get :jobs
+    end
+    member do
+      post :retry
+    end
+  end
 
   api_version module: "V1", path: { value: "v1" } do
     resources :users, only: [ :index ] do
