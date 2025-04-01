@@ -1,24 +1,23 @@
-# Valores de Prioridade no SolidQueue
-# O sistema de prioridade funciona da seguinte maneira:
+# =============================
+# Job with Priority
 
-# 0 → Maior prioridade (executado primeiro)
-# 1-4 → Alta prioridade
-# 5 → Prioridade média (padrão se não especificado)
-# 6-9 → Baixa prioridade
-# 10+ → Menor prioridade (executado por último)
+# Priority Values
+# 0 → Highest priority (executed first)
+# 1-4 → High priority
+# 5 → Medium priority (default if not specified)
+# 6-9 → Low priority
+# 10+ → Lowest priority (executed last)
 
-# MyJob.set(priority: 2).perform_later
+# =============================
+# Jobs with lower priority number are processed first.
 
-class HighPriorityJob < ApplicationJob
-  queue_with_priority 1
-  def perform
-    puts "Job de alta prioridade"
+class PriorityJob < ApplicationJob
+  queue_as :default
+
+  def perform(task)
+    Rails.logger.info "Processing task: #{task}"
   end
 end
 
-class LowPriorityJob < ApplicationJob
-  queue_with_priority 10
-  def perform
-    puts "Job de baixa prioridade"
-  end
-end
+# Usage:
+# PriorityJob.set(priority: 5).perform_later("urgent-task")
