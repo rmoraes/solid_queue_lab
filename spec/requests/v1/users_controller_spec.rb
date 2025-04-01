@@ -9,7 +9,7 @@ RSpec.describe V1::UsersController, type: :request do
   # Documentation for the user listing endpoint
   #
   path '/v1/users' do
-    get('list users') do
+    get('List users') do
       tags 'users'
       produces 'application/json'
       consumes 'application/json'
@@ -22,12 +22,11 @@ RSpec.describe V1::UsersController, type: :request do
 
 
   path '/v1/users/batch_inactivate' do
-    patch('activate users in batch') do
+    patch('Activate users in batch') do
       tags 'users'
       produces 'application/json'
       consumes 'application/json'
 
-      # Define parameters for Swagger documentation
       parameter(name: :kind, in: :query, required: true,
       schema: {
         type: :string,
@@ -35,6 +34,7 @@ RSpec.describe V1::UsersController, type: :request do
       })
 
       response(200, 'successful') do
+        let(:kind) { 'promoter' }
         run_test!
       end
     end

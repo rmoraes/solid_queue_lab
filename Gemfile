@@ -45,7 +45,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "faker"
 
-  gem "rspec-rails"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "rspec-rails"
