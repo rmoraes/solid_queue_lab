@@ -7,10 +7,11 @@
   "paths": {
     "/queues": {
       "get": {
-        "summary": "list queues",
+        "summary": "List all jobs",
         "tags": [
-          "users"
+          "queues"
         ],
+        "description": "List all registered jobs",
         "responses": {
           "200": {
             "description": "successful"
@@ -18,9 +19,183 @@
         }
       }
     },
+    "/queues/ready": {
+      "get": {
+        "summary": "List jobs ready to be executed",
+        "tags": [
+          "queues"
+        ],
+        "description": "Jobs ready to run",
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/queues/running": {
+      "get": {
+        "summary": "List jobs currently being executed",
+        "tags": [
+          "queues"
+        ],
+        "description": "Jobs currently running",
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/queues/failed": {
+      "get": {
+        "summary": "List jobs that failed during execution",
+        "tags": [
+          "queues"
+        ],
+        "description": "Failed jobs",
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/queues/scheduled": {
+      "get": {
+        "summary": "List jobs scheduled for future execution",
+        "tags": [
+          "queues"
+        ],
+        "description": "Scheduled (future) jobs",
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/queues/recurring": {
+      "get": {
+        "summary": "List recurring tasks configured to run periodically",
+        "tags": [
+          "queues"
+        ],
+        "description": "Recurring tasks (cron-like)",
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/queues/status": {
+      "get": {
+        "summary": "Returns job queue status summary",
+        "tags": [
+          "queues"
+        ],
+        "description": "Provides a count summary of jobs by status (ready, running, failed, scheduled, recurring)",
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "integer"
+                    },
+                    "running": {
+                      "type": "integer"
+                    },
+                    "failed": {
+                      "type": "integer"
+                    },
+                    "scheduled": {
+                      "type": "integer"
+                    },
+                    "recurring": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ready",
+                    "running",
+                    "failed",
+                    "scheduled",
+                    "recurring"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/queues/{id}/retry": {
+      "post": {
+        "summary": "Retry a job by ID",
+        "tags": [
+          "queues"
+        ],
+        "description": "Retries a job with the given ID by re-enqueueing it using the original job_class and arguments.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job retried successfully"
+          },
+          "404": {
+            "description": "Job not found"
+          },
+          "422": {
+            "description": "Job class not found or not constantizable"
+          }
+        }
+      }
+    },
+    "/queues/{id}": {
+      "delete": {
+        "summary": "Delete a job by ID",
+        "tags": [
+          "queues"
+        ],
+        "description": "Deletes a job and all related execution records by job ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job deleted successfully"
+          },
+          "404": {
+            "description": "Job not found"
+          }
+        }
+      }
+    },
     "/v1/users": {
       "get": {
-        "summary": "list users",
+        "summary": "List users",
         "tags": [
           "users"
         ],
@@ -33,7 +208,7 @@
     },
     "/v1/users/batch_inactivate": {
       "patch": {
-        "summary": "activate users in batch",
+        "summary": "Activate users in batch",
         "tags": [
           "users"
         ],
